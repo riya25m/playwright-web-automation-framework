@@ -1,15 +1,18 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
+
 import { LoginPage } from '../pages/login.page';
 
-test.describe('Login smoke tests', () => {
-  test('valid user can login successfully', async ({ page }) => {
-    const login = new LoginPage(page);
 
-    await login.goto();
-    await login.login('Admin', 'admin123');
-    await login.assertLoginSuccess();
+test.describe('Login Smoke test cases', async() => {
 
-    await expect(page.locator('//h6[normalize-space()="Dashboard"]')).toBeVisible();
-  });
-});
- 
+  test('Login - Positive Flow', async({ page }) => {
+
+    const loginPage = new LoginPage(page);
+
+    await loginPage.redirectToURL();
+    await loginPage.enterUsername('Admin');
+    await loginPage.enterPassowrd('admin123');
+    await loginPage.clickOnSubmitButton();
+    await loginPage.validateHeaderDashboard();
+  })
+})

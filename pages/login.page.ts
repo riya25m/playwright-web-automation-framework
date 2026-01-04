@@ -1,19 +1,37 @@
-import { Page } from '@playwright/test';
+import { expect, Locator, Page } from '@playwright/test';
 
 export class LoginPage {
-  constructor(private page: Page) {}
 
-  async goto() {
-    await this.page.goto('/');
+  readonly username:Locator;
+  readonly password: Locator;
+  readonly submitButton: Locator;
+  readonly headerDashboard: Locator;
+
+  constructor(private page:Page) {
+    this.username = this.page.getByPlaceholder('Username');
+    this.password = this.page.getByPlaceholder('Password');
+    this.submitButton = this.page.locator("//button[@type='submit']")
+    this.headerDashboard = this.page.locator('//h6[text()="Dashboard"]');
   }
 
-  async login(username: string, password: string) {
-    await this.page.fill('input[name="username"]', username);
-    await this.page.fill('input[name="password"]', password);
-    await this.page.click('button[type="submit"]');
+  async redirectToURL() {
+    await this.page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
   }
 
-  async assertLoginSuccess() {
-    await this.page.waitForURL('**/dashboard/index');
+  async enterUsername(username: string) {
+    await this.username.fill(username);
   }
+
+  async enterPassowrd(password: string) {
+    await this.password.fill(password);
+  }
+
+  async clickOnSubmitButton() {
+    await this.submitButton.click();
+  }
+
+  async validateHeaderDashboard() {
+    await expect(this.headerDashboard).toBeVisible();
+  }
+
 }
