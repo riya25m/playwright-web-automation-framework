@@ -1,11 +1,11 @@
 import { test } from '@playwright/test';
 
-import { LoginPage } from '../pages/login.page';
+import { LoginPage, Logout } from '../pages/login.page';
 
 
 test.describe('Login Smoke test cases', async() => {
 
-  test('Login - Positive Flow', async({ page }) => {
+  test.beforeEach('Login - Positive Flow', async({ page }) => {
 
     const loginPage = new LoginPage(page);
 
@@ -14,5 +14,15 @@ test.describe('Login Smoke test cases', async() => {
     await loginPage.enterPassowrd('admin123');
     await loginPage.clickOnSubmitButton();
     await loginPage.validateHeaderDashboard();
+  })
+
+  test('Logout Scenario', async({ page }) => {
+
+    const logout = new Logout(page);
+
+    await logout.clickOnUserProfileOnHeader();
+    await logout.clickOnLogoutoption();
+    await logout.validateLoginScreen();
+
   })
 })

@@ -8,5 +8,17 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     trace: 'on-first-retry'
   },
-  reporter: [['html', { outputFolder: 'playwright-report' }]]
+  reporter: [['html', { outputFolder: 'playwright-report' }]],
+
+  // projects: [
+  //   {
+  //     name: 'chromium', use: { browserName: 'chromium'}
+  //   },
+  //   {
+  //     name: 'webkit', use: { browserName: 'webkit'}
+  //   },
+  //   {
+  //     name: 'firefox', use: { browserName: 'firefox'}
+  //   }
+  // ]
 });
